@@ -1,0 +1,57 @@
+# Copy to the working directory as config.yaml and fill in.
+
+rules:
+  file: "rulebook.xlsx"
+  sheet: "Rules"
+  header_row: 1
+  columns:
+    id: "Rule ID"
+    domain: "Domain"
+    entity: "Entity"
+    condition: "Condition"
+    fields: "Required Fields"
+    threshold: "Threshold"
+    severity: "Severity"
+    owner_role: "Owner Role"
+
+datasets:
+  - name: "orders"
+    file: "orders.xlsx"
+    sheet: "Sheet1"
+    header_row: 1
+    id_column: "Order ID"
+    status_column: "Status"
+    valid_status: ["Approved"]
+    date_columns:
+      approval: "Approved At"
+      business: "Business Date"
+    fields:
+      item: "Item"
+      quantity: "Qty"
+      amount: "Amount"
+      currency: "Currency"
+
+  - name: "receipts"
+    file: "receipts.xlsx"
+    sheet: "Sheet1"
+    header_row: 1
+    id_column: "Receipt ID"
+    status_column: "Status"
+    valid_status: ["Approved"]
+    date_columns:
+      approval: "Approved At"
+      business: "Receipt Date"
+    fields:
+      item: "Item"
+      quantity: "Received Qty"
+      reference: "Source Order"
+
+matching:
+  join_on: ["Order ID", "Item"]
+  window_column: "approval"
+  overlap_only: true
+
+output:
+  file: "findings-YYYYMMDD.xlsx"
+  language: "en"
+  register_status_values: ["open", "in progress", "resolved", "accepted"]

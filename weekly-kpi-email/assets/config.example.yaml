@@ -1,0 +1,40 @@
+# Copy to the working directory as config.yaml and fill in.
+# Every value is an example placeholder; none of it is real data.
+
+data:
+  file: "transactions.xlsx"
+  sheet: "Transactions"
+  header_row: 1
+columns:
+  date: "Date"                 # used for week/period assignment
+  date_basis: "approval"       # approval | business
+  amount: "Amount"             # numeric, single currency
+  currency: "Currency"
+  document_id: "Document ID"
+  dimensions:
+    - "Region"
+    - "Team"
+    - "Owner"
+    - "Customer"
+  status: "Status"
+  status_valid: ["Approved"]
+targets:
+  file: "targets.xlsx"
+  sheet: "Targets"
+  layout: "long"               # long: period,dimension,target | wide: one column per period
+  period_column: "Period"
+  dimension_column: "Dimension"
+  target_column: "Target"
+  annual_total: null           # optional; only if you want an annual view
+calendar:
+  week_start: "Monday"         # Monday | Sunday
+  fiscal_year_start: "YYYY-01-01"
+  week_numbering: "iso"        # iso | custom
+report:
+  title: "Weekly KPI Report"
+  greeting: "Hi all,"
+  sign_off: "Name"
+  currency_unit: "CNY"
+  decimals: 2
+  language: "en"               # en | zh
+  font: "Microsoft YaHei"

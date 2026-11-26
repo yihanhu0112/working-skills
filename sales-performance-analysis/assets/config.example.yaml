@@ -1,0 +1,50 @@
+# Copy to the working directory as config.yaml and fill in.
+
+data:
+  file: "sales.xlsx"
+  sheet: "Data"
+  header_row: 1
+columns:
+  date: "Order Date"
+  date_basis: "business"          # business | approval
+  order_id: "Order ID"
+  amount: "Amount"
+  quantity: "Qty"
+  currency: "Currency"
+  customer: "Customer"
+  product: "Product Line"
+  category: "Category"
+  dimensions:
+    - "Region"
+    - "Team"
+    - "Owner"
+  cost: null                      # optional
+targets:
+  company:
+    file: "targets.xlsx"
+    sheet: "Company"
+    period_column: "Period"
+    target_column: "Target"
+  units:
+    file: "targets.xlsx"
+    sheet: "Units"
+    period_column: "Period"
+    dimension_column: "Region"
+    target_column: "Target"
+period:
+  start: "YYYY-01-01"
+  end: "YYYY-06-30"
+  prior_start: "YYYY-01-01"
+  prior_end: "YYYY-06-30"
+exclusions:
+  one_off_orders: []              # list of order IDs
+  one_off_rule: null              # optional rule description
+customer_matching:
+  normalize_case: true
+  strip_legal_suffixes: ["Ltd", "Limited", "Inc", "GmbH", "Pte Ltd"]
+  group_aliases: {}               # {"Alias A": "Canonical Name"}
+commentary:
+  language: "en"
+  unit_comment_style: "strength_weakness"
+output:
+  file: "performance-analysis-YYYYMMDD.xlsx"

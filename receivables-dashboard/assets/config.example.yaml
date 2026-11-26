@@ -1,0 +1,51 @@
+# Copy to the working directory as config.yaml and fill in.
+
+data:
+  file: "receivables.xlsx"
+  sheet: "Ledger"
+  header_row: 1
+columns:
+  document_id: "Invoice ID"
+  customer: "Customer"
+  dimension: "Region"
+  owner: "Account Owner"
+  delivery_status: "Delivery Status"
+  category: "Balance Type"
+  contract_amount: "Contract Amount"
+  collected_amount: "Collected Amount"
+  outstanding_amount: "Outstanding Amount"
+  currency: "Currency"
+  aging_start: "Invoice Date"
+  due_date: "Due Date"
+  expected_date: "Expected Receipt Date"
+  actual_date: "Actual Receipt Date"
+currency:
+  reporting: "CNY"
+  rates: {}                      # optional {currency: rate}; empty means single currency
+aging:
+  start_point: "invoice"         # invoice | due | order
+  buckets_days: [30, 60, 90, 180]
+overdue:
+  as_of: "today"                 # today | YYYY-MM-DD
+categories:
+  order: []                      # display order; empty = by amount
+  merge_below_share: 0.03        # group small slices into "Other"
+dashboard:
+  title: "Receivables Dashboard"
+  output: "receivables-YYYYMMDD.html"
+  kpi:
+    - contract
+    - collected
+    - outstanding
+    - collection_rate
+    - overdue
+    - overdue_share
+  modules:
+    - collections_by_dimension
+    - outstanding_share
+    - category_by_delivery
+    - aging
+    - overdue
+    - top_debtors
+    - expected_collections
+    - period_collections

@@ -1,0 +1,32 @@
+# Copy to the working directory as config.yaml and fill in.
+
+deck:
+  type: "performance"            # performance | initiative
+  template: "template.pptx"
+  output: "review-YYYYMM.pptx"
+  period: "YYYY-MM"
+  audience: "management"
+  language: "en"
+  tone: "factual"                # factual | urgent | celebratory
+  pages:
+    - cover
+    - agenda
+    - headline
+    - decomposition
+    - structure
+    - risk
+    - asks
+    - next
+    - closing
+branding:
+  font: "Microsoft YaHei"
+  primary: "#1F4E79"
+  accent: "#2E75B6"
+  muted: "#D9D9D9"
+  warning: "#C00000"
+data:
+  file: "data.xlsx"
+  sheet: "Summary"
+speaker_notes:
+  enabled: true
+  words_per_slide: 220

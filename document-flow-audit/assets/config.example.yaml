@@ -1,0 +1,79 @@
+# Copy to the working directory as config.yaml and fill in.
+# Generic example: a base ledger plus three follow-on stages.
+# Replace names, files and columns with your own; keep the structure.
+
+documents:
+  base:
+    file: "base.xlsx"
+    sheet: "Sheet1"
+    header_row: 1
+    key: ["Document ID", "Line Item"]
+    status_column: "Status"
+    valid_status: ["Approved"]
+    fields:
+      entity: "Item"
+      quantity: "Ordered Qty"
+      completed_quantity: "Completed Qty"
+      effort: "Reported Hours"
+      date: "Document Date"
+      close_flag: "Closed"
+      close_values: ["Yes", "Y", "Closed"]
+    status_writeback:
+      column: "Stage Progress"
+      not_started_values: ["Not started", ""]
+
+  stages:
+    - name: "issued"
+      label: "Material issued"
+      files: ["issues.xlsx"]
+      sheet: "Sheet1"
+      header_row: 1
+      key: ["Document ID", "Item"]
+      status_column: "Status"
+      valid_status: ["Approved"]
+      quantity: "Issued Qty"
+      effort: null
+      document_id: "Issue No"
+      date: "Issue Date"
+      alternative_paths: []          # e.g. ["backflush"] if consumption is implicit
+
+    - name: "reported"
+      label: "Execution reported"
+      files: ["reports.xlsx"]
+      sheet: "Sheet1"
+      header_row: 1
+      key: ["Document ID", "Item"]
+      status_column: "Status"
+      valid_status: ["Approved"]
+      quantity: null
+      effort: "Reported Hours"
+      document_id: "Report No"
+      date: "Report Date"
+      alternative_paths: []
+
+    - name: "completed"
+      label: "Receipt / completion"
+      files: ["receipts.xlsx"]
+      sheet: "Sheet1"
+      header_row: 1
+      key: ["Document ID", "Item"]
+      status_column: "Status"
+      valid_status: ["Approved"]
+      quantity: "Received Qty"
+      effort: null
+      document_id: "Receipt No"
+      date: "Receipt Date"
+      alternative_paths: []
+
+output:
+  file: "flow-audit-YYYYMMDD.xlsx"
+  language: "en"
+  state_labels:
+    "000": "Not started"
+    "100": "Issued only"
+    "010": "Reported only"
+    "110": "Issued and reported"
+    "001": "Completed without upstream"
+    "101": "Completed, report skipped"
+    "011": "Completed, issue skipped"
+    "111": "Complete"
